@@ -1,62 +1,80 @@
 # Ather Charge Planner
 
-A simple web app to calculate when to plug in your Ather scooter charger so it reaches the desired battery percentage by your selected time.
+A simple web-based EV charging planner for Ather users.
 
 ## Features
 
-- Supports Ather 450 Series
-- Supports Ather Rizta
-- Save settings locally
-- Charger age efficiency adjustment
-- Target charge options:
-  - 80%
-  - 90%
-  - 100%
-- Works on:
-  - Desktop
-  - iPhone
-  - Android
+### Daily Charge
+Enter your current battery percentage and get:
 
-## How it works
-
-Enter:
-
-- Current battery %
-- Desired ready time
-
-The app calculates:
-
-**Exact plug-in time**
-
-## Supported Chargers
-
-### Standard Portable Charger
-350W
-
-### Duo Charger
-700W
-
-## Hosting Free on GitHub Pages
-
-1. Create a GitHub repository
-2. Upload:
-   - index.html
-   - README.md
-3. Go to Settings → Pages
-4. Select:
-   Deploy from branch → main
-5. Open your live site
-
-## Example
-
-Current battery: 40%  
-Target: 90%  
-Ready by: 8:00 AM
-
-Output:
-
-Plug in at 3:45 AM
+- Required charging duration
+- Estimated finish time
 
 ---
 
-Built for daily Ather charging planning.
+### Gain Calculator
+Enter:
+
+- Current battery %
+- Charging time available
+
+Get:
+
+- Expected final battery %
+- Charge gained
+
+---
+
+### Setup
+
+Save your preferences:
+
+- Charge speed (% per hour)
+- Default target charge %
+- Charger purchase date
+- Same-speed / custom speed preference
+
+Saved automatically using browser local storage.
+
+---
+
+## First Launch Behavior
+
+If no settings are saved:
+
+App opens directly to **Setup**
+
+Once configured:
+
+App opens to **Daily Charge**
+
+---
+
+## Tech
+
+- HTML
+- CSS
+- Vanilla JavaScript
+- LocalStorage
+
+---
+
+## Deploy
+
+Push to GitHub Pages.
+
+Example:
+
+```bash
+git add .
+git commit -m "Update Ather Charge Planner"
+git push
+```
+
+---
+
+## Author
+
+**Mrunal Kanta Muduli**
+
+© 2025
