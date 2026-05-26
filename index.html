@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ather Charge Planner</title>
 
 <style>
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
     background: #000;
     color: #fff;
+    margin: 0;
 }
 
 .container {
@@ -21,27 +21,24 @@ body {
 
 .logo {
     text-align: center;
-    font-size: 42px;
-    margin-bottom: 10px;
+    font-size: 46px;
 }
 
 h1 {
     text-align: center;
-    margin: 0;
 }
 
 .tabs {
     display: flex;
     margin: 20px 0;
-    border-bottom: 1px solid #444;
 }
 
 .tab {
     flex: 1;
     padding: 14px;
     text-align: center;
-    cursor: pointer;
     background: #111;
+    cursor: pointer;
 }
 
 .tab.active {
@@ -50,13 +47,8 @@ h1 {
     font-weight: bold;
 }
 
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
+.section { display: none; }
+.section.active { display: block; }
 
 label {
     display: block;
@@ -67,8 +59,8 @@ input, select, button {
     width: 100%;
     padding: 12px;
     margin-top: 6px;
-    border: none;
     border-radius: 8px;
+    border: none;
 }
 
 button {
@@ -76,101 +68,101 @@ button {
     color: #000;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
 }
 
 .result {
     margin-top: 20px;
-    padding: 15px;
     background: #111;
+    padding: 15px;
     border-radius: 10px;
 }
 
 footer {
     text-align: center;
     margin-top: 40px;
-    color: #888;
-    font-size: 14px;
+    color: #777;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="logo">⚡</div>
-    <h1>Ather Charge Planner</h1>
 
-    <div class="tabs">
-        <div class="tab active" onclick="showTab('schedule')">Charging Schedule</div>
-        <div class="tab" onclick="showTab('gain')">Charge Gain Calculator</div>
-        <div class="tab" onclick="showTab('setup')">Setup</div>
-    </div>
+<div class="logo">⚡</div>
+<h1>Ather Charge Planner</h1>
 
-    <!-- Charging Schedule -->
-    <div id="schedule" class="section active">
-        <label>Current Charge %</label>
-        <input type="number" id="currentCharge">
+<div class="tabs">
+<div class="tab active" onclick="showTab('schedule')">Charging Schedule</div>
+<div class="tab" onclick="showTab('gain')">Charge Gain Calculator</div>
+<div class="tab" onclick="showTab('setup')">Setup</div>
+</div>
 
-        <label>Target Charge Needed</label>
-        <select id="targetCharge">
-            <option>50</option>
-            <option>60</option>
-            <option>70</option>
-            <option>80</option>
-            <option>90</option>
-            <option selected>100</option>
-        </select>
+<!-- Charging Schedule -->
+<div id="schedule" class="section active">
+<label>Current Charge %</label>
+<input type="number" id="currentCharge">
 
-        <label>Target Time</label>
-        <input type="time" id="targetTime">
+<label>Target Charge</label>
+<select id="targetCharge">
+<option>50</option>
+<option>60</option>
+<option>70</option>
+<option>80</option>
+<option>90</option>
+<option selected>100</option>
+</select>
 
-        <button onclick="calculateSchedule()">Calculate</button>
-        <div id="scheduleResult" class="result"></div>
-    </div>
+<label>Target Time</label>
+<input type="time" id="targetTime">
 
-    <!-- Charge Gain Calculator -->
-    <div id="gain" class="section">
-        <label>Current Charge %</label>
-        <input type="number" id="gainCurrent">
+<button onclick="calculateSchedule()">Calculate</button>
+<div id="scheduleResult" class="result"></div>
+</div>
 
-        <label>Target Time</label>
-        <input type="time" id="gainTime">
+<!-- Gain -->
+<div id="gain" class="section">
+<label>Current Charge %</label>
+<input type="number" id="gainCurrent">
 
-        <button onclick="calculateGain()">Calculate</button>
-        <div id="gainResult" class="result"></div>
-    </div>
+<label>Target Time</label>
+<input type="time" id="gainTime">
 
-    <!-- Setup -->
-    <div id="setup" class="section">
-        <label>Ather Model</label>
-        <select id="model">
-            <option>450 2.9</option>
-            <option>450 3.7</option>
-            <option>Rizta 2.9</option>
-            <option>Rizta 3.7</option>
-        </select>
+<button onclick="calculateGain()">Calculate</button>
+<div id="gainResult" class="result"></div>
+</div>
 
-        <label>Charger Type</label>
-        <select id="charger">
-            <option value="350">Standard Portable (350W)</option>
-            <option value="700">Duo Charger (700W)</option>
-        </select>
+<!-- Setup -->
+<div id="setup" class="section">
+<label>Ather Model</label>
+<select id="model" onchange="autoSelectCharger()">
+<option>450 2.9</option>
+<option>450 3.7</option>
+<option>Rizta 2.9</option>
+<option>Rizta 3.7</option>
+</select>
 
-        <label>Optimized Charging</label>
-        <select id="optimized">
-            <option>No (Regular)</option>
-            <option>Yes (Same speed as regular)</option>
-        </select>
+<label>Charging Mode</label>
+<select id="mode">
+<option>Regular</option>
+<option>Optimized</option>
+</select>
 
-        <label>Charger Purchase Date</label>
-        <input type="date" id="purchaseDate">
+<label>Charger Type</label>
+<select id="charger">
+<option value="350">Standard Portable (350W)</option>
+<option value="700">Duo Charger (700W)</option>
+</select>
 
-        <button onclick="saveSettings()">Save Settings</button>
-    </div>
+<label>Charger Purchase Date</label>
+<input type="date" id="purchaseDate">
 
-    <footer>
-        © Mrunal Kanta Muduli
-    </footer>
+<button onclick="saveSettings()">Save Settings</button>
+</div>
+
+<footer>
+© Mrunal Kanta Muduli
+</footer>
+
 </div>
 
 <script>
@@ -180,103 +172,104 @@ function showTab(tab) {
 
     document.getElementById(tab).classList.add('active');
 
-    const index = {
-        schedule:0,
-        gain:1,
-        setup:2
-    };
+    const map = {schedule:0,gain:1,setup:2};
+    document.querySelectorAll('.tab')[map[tab]].classList.add('active');
+}
 
-    document.querySelectorAll('.tab')[index[tab]].classList.add('active');
+function autoSelectCharger() {
+    const model = modelInput().toLowerCase();
+
+    if(model.includes("3.7")) {
+        charger.value = "700";
+    } else {
+        charger.value = "350";
+    }
+}
+
+function modelInput() {
+    return document.getElementById("model").value;
 }
 
 function saveSettings() {
     const settings = {
-        model: model.value,
-        charger: charger.value,
-        optimized: optimized.value,
-        purchaseDate: purchaseDate.value
+        model:model.value,
+        mode:mode.value,
+        charger:charger.value,
+        purchaseDate:purchaseDate.value
     };
 
     localStorage.setItem("atherSettings", JSON.stringify(settings));
-    alert("Settings Saved");
-    showTab('schedule');
+    alert("Saved");
+    showTab("schedule");
 }
 
 function loadSettings() {
     const saved = localStorage.getItem("atherSettings");
 
-    if (!saved) {
-        showTab('setup');
+    if(!saved){
+        showTab("setup");
         return;
     }
 
     const s = JSON.parse(saved);
 
-    model.value = s.model;
-    charger.value = s.charger;
-    optimized.value = s.optimized;
-    purchaseDate.value = s.purchaseDate;
+    model.value=s.model;
+    mode.value=s.mode;
+    charger.value=s.charger;
+    purchaseDate.value=s.purchaseDate;
 }
 
-function getChargeRate() {
-    const charger = parseInt(document.getElementById("charger").value);
-
-    return charger === 700 ? 20 : 10;
+function getRate() {
+    return charger.value == "700" ? 20 : 10;
 }
 
-function formatTime(date) {
-    return date.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
+function formatTime(d){
+    return d.toLocaleTimeString([], {
+        hour:'2-digit',
+        minute:'2-digit',
+        hour12:true
     });
 }
 
-function calculateSchedule() {
-    const current = parseInt(currentCharge.value);
-    const target = parseInt(targetCharge.value);
-    const targetTime = targetTimeInput();
-
-    const rate = getChargeRate();
-    const needed = target - current;
-    const mins = (needed / rate) * 60;
-
-    targetTime.setMinutes(targetTime.getMinutes() - mins);
-
-    scheduleResult.innerHTML =
-        "Plug in at: <b>" + formatTime(targetTime) + "</b>";
-}
-
-function calculateGain() {
-    const current = parseInt(gainCurrent.value);
-    const targetTime = gainTimeInput();
-
-    const now = new Date();
-    const diff = (targetTime - now) / 60000;
-
-    const rate = getChargeRate();
-    const gain = (diff / 60) * rate;
-
-    gainResult.innerHTML =
-        "Estimated charge by then: <b>" +
-        Math.min(100, Math.round(current + gain)) +
-        "%</b>";
-}
-
-function targetTimeInput() {
-    const val = document.getElementById("targetTime").value;
-    const [h,m] = val.split(":");
-    const d = new Date();
+function getInputTime(id){
+    const val=document.getElementById(id).value;
+    const [h,m]=val.split(":");
+    const d=new Date();
     d.setHours(h,m,0,0);
     return d;
 }
 
-function gainTimeInput() {
-    const val = document.getElementById("gainTime").value;
-    const [h,m] = val.split(":");
-    const d = new Date();
-    d.setHours(h,m,0,0);
-    return d;
+function calculateSchedule(){
+    let current=parseInt(currentCharge.value);
+    let target=parseInt(targetCharge.value);
+    let targetT=getInputTime("targetTime");
+    let rate=getRate();
+    let modeVal=mode.value;
+
+    let mins;
+
+    if(modeVal==="Optimized" && target>80){
+        mins=((80-current)/rate)*60;
+    } else {
+        mins=((target-current)/rate)*60;
+    }
+
+    targetT.setMinutes(targetT.getMinutes()-mins);
+
+    scheduleResult.innerHTML=
+    "Plug in at: <b>"+formatTime(targetT)+"</b>";
+}
+
+function calculateGain(){
+    let current=parseInt(gainCurrent.value);
+    let targetT=getInputTime("gainTime");
+    let now=new Date();
+
+    let mins=(targetT-now)/60000;
+    let gain=(mins/60)*getRate();
+
+    gainResult.innerHTML=
+    "Estimated battery: <b>"+Math.min(100,Math.round(current+gain))+"%</b>";
 }
 
 loadSettings();
