@@ -7,232 +7,213 @@
 
 <style>
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    max-width: 700px;
+    background: #000;
+    color: #fff;
+}
+
+.container {
+    max-width: 900px;
     margin: auto;
     padding: 20px;
-    background: #000;
-    color: white;
 }
 
 .logo {
     text-align: center;
-    margin-bottom: 10px;
-}
-
-.logo svg {
-    width: 90px;
-    height: 90px;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #aaa;
     margin-bottom: 25px;
 }
 
-.card {
-    background: #111;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #333;
+.logo svg {
+    width: 70px;
+    height: 70px;
+    fill: white;
 }
 
-label {
+.tabs {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #444;
+    margin-bottom: 25px;
+}
+
+.tab {
+    padding: 14px 24px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+    border-bottom: 2px solid white;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
     display: block;
-    margin-top: 14px;
-    margin-bottom: 6px;
 }
 
-input, select, button {
+input, button, select {
     width: 100%;
     padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-}
-
-input, select {
-    background: #222;
+    margin: 10px 0;
+    background: #111;
+    border: 1px solid #444;
     color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
 }
 
 button {
-    margin-top: 16px;
-    cursor: pointer;
     background: white;
     color: black;
+    cursor: pointer;
     font-weight: bold;
-}
-
-.secondary {
-    background: #333;
-    color: white;
 }
 
 .result {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 24px;
+    margin-top: 15px;
+    padding: 16px;
+    background: #111;
+    border-radius: 8px;
 }
 
-.small {
+footer {
     text-align: center;
-    margin-top: 10px;
-    color: #bbb;
+    margin-top: 50px;
+    color: #777;
+    font-size: 14px;
 }
 </style>
 </head>
 <body>
 
+<div class="container">
+
 <div class="logo">
-<svg viewBox="0 0 100 100" fill="white">
-    <circle cx="50" cy="50" r="45" stroke="white" stroke-width="3" fill="none"/>
-    <path d="M42 20 L60 20 L52 45 L68 45 L35 80 L45 55 L30 55 Z" fill="white"/>
+<svg viewBox="0 0 64 64">
+<path d="M38 2L14 34h14l-2 28 24-32H36z"/>
 </svg>
+<h1>Ather Charge Planner</h1>
 </div>
 
-<h1>Ather Charge Planner</h1>
-<div class="subtitle">Smart home charging scheduler</div>
+<div class="tabs">
+    <div class="tab" onclick="showTab('daily')">Daily Charge</div>
+    <div class="tab" onclick="showTab('gain')">Gain Calc</div>
+    <div class="tab" onclick="showTab('setup')">Setup</div>
+</div>
 
-<div class="card">
+<!-- DAILY -->
+<div id="daily" class="tab-content">
+    <h2>Daily Charge</h2>
+    <input type="number" id="dailyCurrent" placeholder="Current Battery %" />
+    <button onclick="calculateDaily()">Calculate</button>
+    <div id="dailyResult" class="result"></div>
+</div>
 
-<label>Scooter Model</label>
-<select id="model">
-    <option value="450">Ather 450 Series</option>
-    <option value="rizta">Ather Rizta</option>
-</select>
+<!-- GAIN -->
+<div id="gain" class="tab-content">
+    <h2>Charge Gain Calculator</h2>
+    <input type="number" id="gainCurrent" placeholder="Current Battery %" />
+    <input type="number" id="gainTime" placeholder="Charging Time (minutes)" />
+    <button onclick="calculateGain()">Calculate</button>
+    <div id="gainResult" class="result"></div>
+</div>
 
-<label>Battery Variant</label>
-<select id="battery">
-    <option value="2.9">2.9 kWh</option>
-    <option value="3.7">3.7 kWh</option>
-</select>
+<!-- SETUP -->
+<div id="setup" class="tab-content">
+    <h2>Setup</h2>
 
-<label>Charger Type</label>
-<select id="charger">
-    <option value="350">Standard Portable (350W)</option>
-    <option value="700">Duo Charger (700W)</option>
-</select>
+    <input type="number" id="chargeSpeed" placeholder="Charge Speed (% per hour)" />
 
-<label>Charging Mode</label>
-<select id="mode">
-    <option value="regular">Regular</option>
-    <option value="optimized">Optimized</option>
-</select>
+    <input type="number" id="targetPercent" placeholder="Target Charge %" />
 
-<label>Charger Purchase Date</label>
-<input type="date" id="purchaseDate">
+    <input type="date" id="purchaseDate" />
 
-<label>Current Battery %</label>
-<input type="number" id="current" min="0" max="100">
+    <select id="sameSpeed">
+        <option value="yes">Same speed as regular</option>
+        <option value="no">Custom speed</option>
+    </select>
 
-<label>Target Charge</label>
-<select id="target">
-    <option value="80">80%</option>
-    <option value="90">90%</option>
-    <option value="100">100%</option>
-</select>
+    <button onclick="saveSettings()">Save Settings</button>
 
-<label>Need Fully Charged By</label>
-<input type="time" id="readyTime">
+    <div id="setupResult" class="result"></div>
+</div>
 
-<button onclick="calculate()">Calculate</button>
-<button class="secondary" onclick="saveSettings()">Save Settings</button>
-<button class="secondary" onclick="resetSettings()">Reset</button>
-
-<div class="result" id="result"></div>
-<div class="small" id="details"></div>
+<footer>
+© 2025 Mrunal Kanta Muduli
+</footer>
 
 </div>
 
 <script>
-const fullChargeTimes = {
-    "450": 5.75,
-    "rizta": 8.5
-};
+let settings = JSON.parse(localStorage.getItem("atherSettings"));
 
-function getEfficiency(date) {
-    if (!date) return 1;
-    const purchase = new Date(date);
-    const now = new Date();
-    const years = (now - purchase)/(1000*60*60*24*365);
+function showTab(tab) {
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
 
-    if (years < 1) return 1;
-    if (years < 2) return 0.97;
-    if (years < 3) return 0.94;
-    return 0.90;
-}
+    document.getElementById(tab).classList.add("active");
 
-function calculate() {
-    const model = document.getElementById("model").value;
-    const current = parseFloat(document.getElementById("current").value);
-    const target = parseFloat(document.getElementById("target").value);
-    const readyTime = document.getElementById("readyTime").value;
-    const purchaseDate = document.getElementById("purchaseDate").value;
-    const mode = document.getElementById("mode").value;
-
-    if (!readyTime || isNaN(current)) {
-        alert("Enter battery % and ready time");
-        return;
-    }
-
-    const efficiency = getEfficiency(purchaseDate);
-    const chargeHours = (fullChargeTimes[model] * (target-current)/100)/efficiency;
-
-    const [h,m] = readyTime.split(":").map(Number);
-    const ready = new Date();
-    ready.setHours(h,m,0,0);
-
-    const plugIn = new Date(ready - chargeHours*3600000);
-
-    document.getElementById("result").innerText =
-        "Plug in at " +
-        plugIn.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-
-    document.getElementById("details").innerHTML =
-        `Charge Duration: ${chargeHours.toFixed(2)} hrs<br>
-         Efficiency: ${(efficiency*100).toFixed(0)}%<br>
-         Mode: ${mode}`;
+    const tabs = document.querySelectorAll(".tab");
+    if(tab==="daily") tabs[0].classList.add("active");
+    if(tab==="gain") tabs[1].classList.add("active");
+    if(tab==="setup") tabs[2].classList.add("active");
 }
 
 function saveSettings() {
-    ["model","battery","charger","mode","purchaseDate","target"]
-    .forEach(id => localStorage.setItem(id, document.getElementById(id).value));
-    alert("Settings saved");
+    settings = {
+        speed: parseFloat(document.getElementById("chargeSpeed").value),
+        target: parseFloat(document.getElementById("targetPercent").value),
+        purchaseDate: document.getElementById("purchaseDate").value,
+        sameSpeed: document.getElementById("sameSpeed").value
+    };
+
+    localStorage.setItem("atherSettings", JSON.stringify(settings));
+
+    document.getElementById("setupResult").innerHTML = "Settings saved successfully.";
+    showTab("daily");
 }
 
-function loadSettings() {
-    ["model","battery","charger","mode","purchaseDate","target"]
-    .forEach(id => {
-        const val = localStorage.getItem(id);
-        if(val) document.getElementById(id).value = val;
-    });
+function calculateDaily() {
+    if (!settings) return;
+
+    const current = parseFloat(document.getElementById("dailyCurrent").value);
+
+    const needed = settings.target - current;
+    const hours = needed / settings.speed;
+
+    const finish = new Date();
+    finish.setHours(finish.getHours() + hours);
+
+    document.getElementById("dailyResult").innerHTML =
+        `Charge for <b>${hours.toFixed(2)} hrs</b><br>
+         Finish by <b>${finish.toLocaleTimeString()}</b>`;
 }
 
-function resetSettings() {
-    localStorage.clear();
-    location.reload();
+function calculateGain() {
+    if (!settings) return;
+
+    const current = parseFloat(document.getElementById("gainCurrent").value);
+    const mins = parseFloat(document.getElementById("gainTime").value);
+
+    const gain = (settings.speed / 60) * mins;
+    const finalCharge = Math.min(current + gain, 100);
+
+    document.getElementById("gainResult").innerHTML =
+        `Expected Battery: <b>${finalCharge.toFixed(1)}%</b><br>
+         Gain: <b>+${gain.toFixed(1)}%</b>`;
 }
 
-loadSettings();
+if (!settings) {
+    showTab("setup");
+} else {
+    showTab("daily");
+}
 </script>
 
-    <footer style="
-    text-align:center;
-    margin-top:30px;
-    padding:20px;
-    color:#777;
-    font-size:14px;
-    border-top:1px solid #222;">
-    © 2026 Mrunal Kanta Muduli. All rights reserved.
-</footer>
-    
 </body>
 </html>
