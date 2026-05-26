@@ -4,70 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ather Charge Planner</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        max-width: 700px;
-        margin: auto;
-        padding: 20px;
-        background: #111827;
-        color: white;
-    }
+body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    background: #000;
+    color: white;
+}
 
-    .card {
-        background: #1f2937;
-        padding: 20px;
-        border-radius: 14px;
-        margin-bottom: 20px;
-    }
+.logo {
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-    h1 {
-        text-align: center;
-    }
+.logo svg {
+    width: 90px;
+    height: 90px;
+}
 
-    label {
-        display: block;
-        margin-top: 15px;
-        margin-bottom: 6px;
-    }
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
 
-    input, select, button {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        font-size: 16px;
-    }
+.subtitle {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 25px;
+}
 
-    button {
-        margin-top: 18px;
-        cursor: pointer;
-        background: #2563eb;
-        color: white;
-    }
+.card {
+    background: #111;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #333;
+}
 
-    .secondary {
-        background: #374151;
-    }
+label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 6px;
+}
 
-    .result {
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-        color: #22c55e;
-        margin-top: 20px;
-    }
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
 
-    .small {
-        text-align: center;
-        margin-top: 10px;
-        color: #d1d5db;
-    }
+input, select {
+    background: #222;
+    color: white;
+}
+
+button {
+    margin-top: 16px;
+    cursor: pointer;
+    background: white;
+    color: black;
+    font-weight: bold;
+}
+
+.secondary {
+    background: #333;
+    color: white;
+}
+
+.result {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 24px;
+}
+
+.small {
+    text-align: center;
+    margin-top: 10px;
+    color: #bbb;
+}
 </style>
 </head>
 <body>
 
+<div class="logo">
+<svg viewBox="0 0 100 100" fill="white">
+    <circle cx="50" cy="50" r="45" stroke="white" stroke-width="3" fill="none"/>
+    <path d="M42 20 L60 20 L52 45 L68 45 L35 80 L45 55 L30 55 Z" fill="white"/>
+</svg>
+</div>
+
 <h1>Ather Charge Planner</h1>
+<div class="subtitle">Smart home charging scheduler</div>
 
 <div class="card">
 
@@ -126,12 +158,11 @@ const fullChargeTimes = {
     "rizta": 8.5
 };
 
-function getEfficiency(purchaseDate) {
-    if (!purchaseDate) return 1;
-
-    const purchase = new Date(purchaseDate);
+function getEfficiency(date) {
+    if (!date) return 1;
+    const purchase = new Date(date);
     const now = new Date();
-    const years = (now - purchase) / (1000 * 60 * 60 * 24 * 365);
+    const years = (now - purchase)/(1000*60*60*24*365);
 
     if (years < 1) return 1;
     if (years < 2) return 0.97;
@@ -148,66 +179,40 @@ function calculate() {
     const mode = document.getElementById("mode").value;
 
     if (!readyTime || isNaN(current)) {
-        alert("Please enter battery % and ready time.");
+        alert("Enter battery % and ready time");
         return;
     }
 
     const efficiency = getEfficiency(purchaseDate);
-    const fullHours = fullChargeTimes[model];
+    const chargeHours = (fullChargeTimes[model] * (target-current)/100)/efficiency;
 
-    const requiredPercent = target - current;
-
-    if (requiredPercent <= 0) {
-        document.getElementById("result").innerText =
-            "Battery already at target";
-        return;
-    }
-
-    const chargeHours = (fullHours * requiredPercent / 100) / efficiency;
-
-    const [hours, minutes] = readyTime.split(":").map(Number);
-
+    const [h,m] = readyTime.split(":").map(Number);
     const ready = new Date();
-    ready.setHours(hours, minutes, 0, 0);
+    ready.setHours(h,m,0,0);
 
-    const plugIn = new Date(ready.getTime() - chargeHours * 3600000);
-
-    const plugTime = plugIn.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit'
-    });
+    const plugIn = new Date(ready - chargeHours*3600000);
 
     document.getElementById("result").innerText =
-        `Plug in at ${plugTime}`;
+        "Plug in at " +
+        plugIn.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
 
     document.getElementById("details").innerHTML =
         `Charge Duration: ${chargeHours.toFixed(2)} hrs<br>
-         Efficiency: ${(efficiency * 100).toFixed(0)}%<br>
+         Efficiency: ${(efficiency*100).toFixed(0)}%<br>
          Mode: ${mode}`;
 }
 
 function saveSettings() {
-    const fields = [
-        "model","battery","charger","mode",
-        "purchaseDate","target"
-    ];
-
-    fields.forEach(id => {
-        localStorage.setItem(id, document.getElementById(id).value);
-    });
-
+    ["model","battery","charger","mode","purchaseDate","target"]
+    .forEach(id => localStorage.setItem(id, document.getElementById(id).value));
     alert("Settings saved");
 }
 
 function loadSettings() {
-    const fields = [
-        "model","battery","charger","mode",
-        "purchaseDate","target"
-    ];
-
-    fields.forEach(id => {
+    ["model","battery","charger","mode","purchaseDate","target"]
+    .forEach(id => {
         const val = localStorage.getItem(id);
-        if (val) document.getElementById(id).value = val;
+        if(val) document.getElementById(id).value = val;
     });
 }
 
