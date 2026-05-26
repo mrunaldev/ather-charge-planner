@@ -1,80 +1,79 @@
 # Ather Charge Planner
 
-A simple web-based EV charging planner for Ather users.
+Simple free web app for planning Ather scooter charging.
 
 ## Features
 
-### Daily Charge
-Enter your current battery percentage and get:
+### Charging Schedule
+Input:
+- Current battery %
+- Target battery %
+- Target time
 
-- Required charging duration
-- Estimated finish time
+Output:
+- Exact time to plug in charger
 
 ---
 
-### Gain Calculator
-Enter:
-
+### Charge Gain Calculator
+Input:
 - Current battery %
-- Charging time available
+- Target time
 
-Get:
-
-- Expected final battery %
-- Charge gained
+Output:
+- Estimated battery % by that time
 
 ---
 
 ### Setup
-
-Save your preferences:
-
-- Charge speed (% per hour)
-- Default target charge %
+Saved locally:
+- Ather model
+- Charger type
+- Optimized charging mode
 - Charger purchase date
-- Same-speed / custom speed preference
-
-Saved automatically using browser local storage.
 
 ---
 
-## First Launch Behavior
-
-If no settings are saved:
-
-App opens directly to **Setup**
-
-Once configured:
-
-App opens to **Daily Charge**
+## Supported Chargers
+- Standard Portable Charger (350W)
+- Duo Charger (700W)
 
 ---
 
-## Tech
-
-- HTML
-- CSS
-- Vanilla JavaScript
-- LocalStorage
+## Works On
+- iPhone
+- Android
+- Laptop
+- Desktop
 
 ---
 
-## Deploy
+## Free Hosting Options
 
-Push to GitHub Pages.
+### Best
+- GitHub Pages
 
-Example:
+### Alternatives
+- Netlify
+- Vercel
 
-```bash
-git add .
-git commit -m "Update Ather Charge Planner"
-git push
-```
+---
+
+## Deploy on GitHub Pages
+
+1. Create GitHub repo
+2. Upload `index.html`
+3. Go to:
+
+Settings → Pages
+
+4. Select:
+
+Deploy from branch → main → root
+
+Your app will be live free forever.
 
 ---
 
 ## Author
-
-**Mrunal Kanta Muduli**
-
-© 2025
+Mrunal Kanta Muduli
