@@ -1,36 +1,56 @@
 # Ather Charge Planner
 
-Simple free web app for planning Ather scooter charging.
+A lightweight web app for planning Ather scooter charging schedules.
 
 ## Features
 
 ### Charging Schedule
-Input:
+Enter:
 - Current battery %
 - Target battery %
 - Target time
 
-Output:
-- Exact time to plug in charger
+Get:
+- Exact plug-in time
 
 ---
 
 ### Charge Gain Calculator
-Input:
+Enter:
 - Current battery %
-- Target time
+- Future target time
 
-Output:
+Get:
 - Estimated battery % by that time
 
 ---
 
 ### Setup
-Saved locally:
+Save once:
 - Ather model
+- Charging mode
 - Charger type
-- Optimized charging mode
 - Charger purchase date
+
+Saved automatically in browser local storage.
+
+---
+
+## Charging Modes
+
+### Regular Charging
+Charges continuously to target %
+
+### Optimized Charging
+Charges to 80% first and delays final charging to reduce battery stress.
+
+---
+
+## Supported Models
+- Ather 450 2.9
+- Ather 450 3.7
+- Ather Rizta 2.9
+- Ather Rizta 3.7
 
 ---
 
@@ -43,37 +63,41 @@ Saved locally:
 ## Works On
 - iPhone
 - Android
-- Laptop
-- Desktop
+- Mac
+- Windows
+- Linux
 
 ---
 
-## Free Hosting Options
+## Free Hosting
 
-### Best
-- GitHub Pages
+### GitHub Pages (Recommended)
+Free forever
 
-### Alternatives
+### Also Works On
 - Netlify
 - Vercel
 
 ---
 
-## Deploy on GitHub Pages
+## Deploy
 
-1. Create GitHub repo
-2. Upload `index.html`
-3. Go to:
+1. Create GitHub repository
+2. Upload:
+   - index.html
+   - README.md
+
+3. Open:
 
 Settings → Pages
 
 4. Select:
+Main branch → Root
 
-Deploy from branch → main → root
-
-Your app will be live free forever.
+Your app will be live instantly.
 
 ---
 
 ## Author
+
 Mrunal Kanta Muduli
