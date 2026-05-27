@@ -16,16 +16,23 @@
     box-sizing: border-box;
 }
 
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Orbitron', sans-serif;
     background: #000;
     color: #fff;
     margin: 0;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .container {
-    max-width: 720px;
-    margin: auto;
+    width: min(100%, 720px);
+    margin: 0 auto;
     padding: 20px 16px;
     min-height: 100vh;
     display: flex;
@@ -51,26 +58,27 @@ h1 {
 }
 
 .tabs {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
     gap: 6px;
     margin-bottom: 24px;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
 .tab {
-    flex: 1;
-    min-width: 120px;
+    min-width: 0;
+    min-height: 48px;
     padding: clamp(12px, 3vw, 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     background: #111;
     border: 1px solid #333;
     border-radius: 10px;
     cursor: pointer;
     font-size: clamp(11px, 2vw, 14px);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
 }
 
 .tab.active {
@@ -85,6 +93,7 @@ h1 {
     padding: clamp(16px, 5vw, 24px);
     border-radius: 14px;
     border: 1px solid #222;
+    min-width: 0;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -102,13 +111,24 @@ label {
     color: #ccc;
 }
 
+.intro {
+    margin: 0 0 20px 0;
+    color: #888;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: break-word;
+}
+
 input, select, button {
     width: 100%;
+    max-width: 100%;
+    min-height: 48px;
     padding: clamp(12px, 3vw, 16px);
     border-radius: 10px;
     border: 1px solid #333;
     font-family: 'Orbitron', sans-serif;
     font-size: clamp(13px, 2.5vw, 15px);
+    line-height: 1.25;
 }
 
 input, select {
@@ -144,6 +164,7 @@ button:active {
     text-align: center;
     font-size: clamp(13px, 2.5vw, 16px);
     line-height: 1.6;
+    min-width: 0;
     word-break: break-word;
 }
 
@@ -183,6 +204,7 @@ button:active {
     border-radius: 10px;
     border: 1px solid #333;
     margin-bottom: 14px;
+    min-width: 0;
 }
 
 .sample-input {
@@ -201,6 +223,7 @@ button:active {
     border-radius: 10px;
     margin-top: 12px;
     text-align: center;
+    min-width: 0;
     word-break: break-word;
 }
 
@@ -234,14 +257,15 @@ footer {
     }
 
     .tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 4px;
         margin-bottom: 18px;
     }
 
     .tab {
-        min-width: 90px;
+        min-height: 44px;
         padding: 10px 8px;
-        font-size: 11px;
+        font-size: 12px;
     }
 
     .section {
@@ -255,7 +279,7 @@ footer {
 
     input, select, button {
         padding: 12px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .result {
@@ -297,13 +321,12 @@ footer {
     .tabs {
         gap: 3px;
         margin-bottom: 14px;
-        flex-wrap: wrap;
     }
 
     .tab {
-        min-width: 80px;
+        min-height: 42px;
         padding: 8px 6px;
-        font-size: 10px;
+        font-size: 11px;
     }
 
     .section {
@@ -317,7 +340,7 @@ footer {
 
     input, select, button {
         padding: 10px;
-        font-size: 13px;
+        font-size: 16px;
     }
 
     .result {
@@ -336,7 +359,7 @@ footer {
 
 @media (min-width: 1200px) {
     .container {
-        max-width: 900px;
+        width: min(100%, 900px);
         padding: 32px;
     }
 
@@ -401,7 +424,7 @@ footer {
 
 <!-- Charging Schedule -->
 <div id="schedule" class="section active">
-    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+    <p class="intro">
         Enter your current battery, target charge, and desired completion time. We'll calculate the exact time you need to plug in your scooter.
     </p>
 
@@ -427,7 +450,7 @@ footer {
 
 <!-- Charge Gain -->
 <div id="gain" class="section">
-    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+    <p class="intro">
         See how much battery you'll gain by a specific time. Enter your current charge and target time to get an estimated battery percentage.
     </p>
 
@@ -443,7 +466,7 @@ footer {
 
 <!-- Calibrate -->
 <div id="calibrate" class="section">
-    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+    <p class="intro">
         Track 3 charging observations to calibrate the actual charging speed. Record the time and battery percentage at different points during a charge cycle.
     </p>
 
@@ -474,7 +497,7 @@ footer {
 
 <!-- Setup -->
 <div id="setup" class="section">
-    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+    <p class="intro">
         Configure your Ather scooter model, charging mode, and charger specifications. These settings are saved locally and used for accurate calculations.
     </p>
 
