@@ -602,6 +602,14 @@ function formatTime(d) {
     });
 }
 
+function isTomorrow(d) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return d.getFullYear() === tomorrow.getFullYear() &&
+        d.getMonth() === tomorrow.getMonth() &&
+        d.getDate() === tomorrow.getDate();
+}
+
 function getInputTime(id, assumeNextDayIfPast = false) {
     const val = document.getElementById(id).value;
     if(!val) return null;
@@ -686,6 +694,9 @@ function calculateSchedule() {
     }
 
     let message = "PLUG IN AT <br><br><b>" + formatTime(plugInTime) + "</b>";
+    if(isTomorrow(targetT)) {
+        message += "<br><small style='color: #888;'>Target time treated as tomorrow.</small>";
+    }
     if(modeVal === "Optimized" && target > 80) {
         message += "<br><br><small>Will charge to 80% first, then delay final charge to optimize battery health.</small>";
     }
@@ -728,6 +739,9 @@ function calculateGain() {
     }
 
     let message = "ESTIMATED BATTERY <br><br><b>" + Math.round(estimated) + "%</b>";
+    if(isTomorrow(targetT)) {
+        message += "<br><small style='color: #888;'>Forecast time treated as tomorrow.</small>";
+    }
     if(localStorage.getItem("calibratedRate")) {
         message += "<br><small style='color: #888;'>(Using calibrated rate: " + getRate() + "%/hour)</small>";
     }
