@@ -602,12 +602,17 @@ function formatTime(d) {
     });
 }
 
-function getInputTime(id) {
+function getInputTime(id, assumeNextDayIfPast = false) {
     const val = document.getElementById(id).value;
     if(!val) return null;
     const [h,m] = val.split(":");
     const d = new Date();
     d.setHours(h,m,0,0);
+
+    if(assumeNextDayIfPast && d <= new Date()) {
+        d.setDate(d.getDate() + 1);
+    }
+
     return d;
 }
 
@@ -647,7 +652,7 @@ function calculateSchedule() {
         return;
     }
 
-    const targetT = getInputTime("targetTime");
+    const targetT = getInputTime("targetTime", true);
     if(!targetT) {
         resultDiv.innerHTML = '<div class="error">ERROR: Please enter a target time</div>';
         return;
@@ -701,7 +706,7 @@ function calculateGain() {
         return;
     }
 
-    const targetT = getInputTime("gainTime");
+    const targetT = getInputTime("gainTime", true);
     if(!targetT) {
         resultDiv.innerHTML = '<div class="error">ERROR: Please enter a target time</div>';
         return;

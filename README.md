@@ -18,6 +18,8 @@ Get:
 - A warning if the target time is too soon
 - Optimized charging guidance when enabled
 
+If the selected target time has already passed today, the app treats it as the same time tomorrow.
+
 ### Forecast
 
 Enter:
@@ -27,6 +29,8 @@ Enter:
 Get:
 - Estimated battery percentage by that time
 - Estimates capped at 100%
+
+If the selected forecast time has already passed today, the app treats it as the same time tomorrow.
 
 ### Calibrate
 
