@@ -1,102 +1,112 @@
 # Ather Charge Planner
 
-A lightweight web app for planning Ather scooter charging schedules.
+A lightweight, single-page web app for planning Ather scooter charging schedules.
+
+The app runs entirely in `index.html`, stores settings in browser local storage, and uses a responsive dark UI with a vertical thunder-style logo.
 
 ## Features
 
-### Charging Schedule
+### When To Charge
+
 Enter:
-- Current battery %
-- Target battery %
-- Target time
+- Current charge percentage
+- Target charge percentage
+- Target completion time
 
 Get:
-- Exact plug-in time
+- The exact time to plug in
+- A warning if the target time is too soon
+- Optimized charging guidance when enabled
 
----
+### Forecast
 
-### Charge Gain Calculator
 Enter:
-- Current battery %
+- Current charge percentage
 - Future target time
 
 Get:
-- Estimated battery % by that time
+- Estimated battery percentage by that time
+- Estimates capped at 100%
 
----
+### Calibrate
+
+Enter three charging observations:
+- Sample time
+- Battery percentage at that time
+
+Get:
+- Average charging speed in `%/hour`
+- Charging quality rating
+- Per-sample charging rate comparison
+
+The calibrated rate is saved in browser local storage and used for future schedule and forecast calculations.
 
 ### Setup
-Save once:
+
+Save:
 - Ather model
 - Charging mode
 - Charger type
 - Charger purchase date
 
-Saved automatically in browser local storage.
-
----
+Settings are saved in browser local storage. Updating settings clears the previous calibrated rate.
 
 ## Charging Modes
 
-### Regular Charging
-Charges continuously to target %
+### Regular
 
-### Optimized Charging
-Charges to 80% first and delays final charging to reduce battery stress.
+Calculates charging time directly from current charge to target charge.
 
----
+### Optimized
+
+When the target is above 80%, the app calculates charging to 80% first and notes that final charging should be delayed to reduce battery stress.
 
 ## Supported Models
+
 - Ather 450 2.9
 - Ather 450 3.7
 - Ather Rizta 2.9
 - Ather Rizta 3.7
 
----
+Models with `3.7` auto-select the Duo Charger. Other models auto-select the Standard Portable Charger.
 
 ## Supported Chargers
-- Standard Portable Charger (350W)
-- Duo Charger (700W)
 
----
+- Standard Portable Charger `(350W)` - default rate: `10%/hour`
+- Duo Charger `(700W)` - default rate: `20%/hour`
+
+If calibration is saved, the calibrated rate overrides the charger default.
+
+## Validation
+
+The app checks for:
+- Empty or invalid percentage values
+- Negative percentages
+- Percentages above 100%
+- Target charge lower than current charge
+- Missing target times
+- Target times that are not in the future
+- Calibration samples that are not in ascending time order
+- Calibration battery percentages that do not increase over time
 
 ## Works On
+
 - iPhone
 - Android
 - Mac
 - Windows
 - Linux
 
----
-
-## Free Hosting
-
-### GitHub Pages (Recommended)
-Free forever
-
-### Also Works On
-- Netlify
-- Vercel
-
----
-
 ## Deploy
 
-1. Create GitHub repository
+1. Create a GitHub repository.
 2. Upload:
-   - index.html
-   - README.md
+   - `index.html`
+   - `README.md`
+3. Open `Settings > Pages`.
+4. Select `Main branch > Root`.
 
-3. Open:
-
-Settings → Pages
-
-4. Select:
-Main branch → Root
-
-Your app will be live instantly.
-
----
+The app can also be hosted on Netlify or Vercel because it is a static HTML page.
 
 ## Author
 
