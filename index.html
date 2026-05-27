@@ -6,10 +6,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 
-<title>⌁ Ather Charge Planner - Smart Battery Scheduling</title>
+<title>Ather Charge Planner - Smart Battery Scheduling</title>
 
-<!-- Favicon as vertical logo -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='70' font-size='90' font-family='Arial' text-anchor='middle' fill='%23ffffff' transform='rotate(-90 50 50)'>⌁</text></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='20' y='28' width='60' height='54' rx='10' fill='%23000000' stroke='%23ffffff' stroke-width='6'/%3E%3Cpath d='M20 43h60' stroke='%23ffffff' stroke-width='6'/%3E%3Cpath d='M36 20v18M64 20v18' stroke='%23ffffff' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M55 8L30 54h18l-8 38 30-50H51z' fill='%23ffffff' stroke='%23000000' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E">
 
 <style>
 * {
@@ -40,11 +39,16 @@ body {
 }
 
 .logo {
-    text-align: center;
-    font-size: clamp(48px, 12vw, 72px);
-    margin: 8px 0 16px 0;
-    line-height: 1;
-    transform: rotate(-90deg);
+    width: clamp(78px, 18vw, 112px);
+    aspect-ratio: 1;
+    margin: 8px auto 16px auto;
+    display: block;
+}
+
+.logo svg {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 h1 {
@@ -310,7 +314,7 @@ footer {
     }
 
     .logo {
-        font-size: 44px;
+        width: 72px;
     }
 
     h1 {
@@ -412,7 +416,17 @@ footer {
 
 <div class="container">
 
-<div class="logo">⌁</div>
+<div class="logo" aria-label="Ather charge schedule logo">
+    <svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+        <rect x="24" y="34" width="72" height="62" rx="12" fill="#111" stroke="#fff" stroke-width="6"/>
+        <path d="M24 52h72" stroke="#fff" stroke-width="6"/>
+        <path d="M42 24v20M78 24v20" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+        <path d="M66 10L36 66h22l-10 44 36-60H62z" fill="#fff" stroke="#000" stroke-width="5" stroke-linejoin="round"/>
+        <circle cx="42" cy="68" r="3" fill="#fff"/>
+        <circle cx="60" cy="68" r="3" fill="#fff"/>
+        <circle cx="78" cy="68" r="3" fill="#fff"/>
+    </svg>
+</div>
 <h1>Smart Charging Scheduler</h1>
 
 <div class="tabs">
