@@ -1,8 +1,18 @@
 # Ather Charge Planner
 
-A lightweight, single-page web app for planning Ather scooter charging schedules.
+A lightweight web app for planning Ather scooter charging schedules.
 
-The app runs entirely in `index.html`, stores settings in browser local storage, and uses a responsive dark UI with a vertical thunder-style logo.
+The app stores settings in browser local storage and uses a responsive dark UI with a black-and-white calendar plus thunder logo.
+
+## Project Structure
+
+- `index.html` - App markup and metadata
+- `assets/css/styles.css` - Responsive layout and visual styling
+- `assets/js/app.js` - Charging calculations, setup, validation, and calibration
+- `assets/app-icon.svg` - Source app icon
+- `assets/apple-touch-icon.png` - iOS home-screen icon
+- `site.webmanifest` - Installable app metadata
+- `tests/` - Reusable functional and static checks
 
 ## Features
 
@@ -93,6 +103,16 @@ The app checks for:
 - Calibration samples that are not in ascending time order
 - Calibration battery percentages that do not increase over time
 
+## Tests
+
+Run the reusable test suite from the project root:
+
+```bash
+./tests/run-tests.sh
+```
+
+The suite checks charging calculations, setup behavior, validation, calibration, next-day time handling, linked assets, manifest validity, and modular HTML structure.
+
 ## Works On
 
 - iPhone
@@ -106,6 +126,8 @@ The app checks for:
 1. Create a GitHub repository.
 2. Upload:
    - `index.html`
+   - `assets/`
+   - `site.webmanifest`
    - `README.md`
 3. Open `Settings > Pages`.
 4. Select `Main branch > Root`.
