@@ -6,7 +6,10 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
 
-<title>Ather Charge Planner</title>
+<title>⌁ Ather Charge Planner - Smart Battery Scheduling</title>
+
+<!-- Favicon as vertical logo -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='70' font-size='90' font-family='Arial' text-anchor='middle' fill='%23ffffff' transform='rotate(-90 50 50)'>⌁</text></svg>">
 
 <style>
 * {
@@ -23,38 +26,49 @@ body {
 .container {
     max-width: 720px;
     margin: auto;
-    padding: 24px;
+    padding: 20px 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .logo {
     text-align: center;
-    font-size: 64px;
-    margin: 10px 0;
+    font-size: clamp(48px, 12vw, 72px);
+    margin: 8px 0 16px 0;
 }
 
 h1 {
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
-    letter-spacing: 2px;
+    font-size: clamp(20px, 5vw, 32px);
+    margin: 0 0 24px 0;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    line-height: 1.2;
+    word-break: break-word;
 }
 
 .tabs {
     display: flex;
-    gap: 8px;
-    margin-bottom: 28px;
+    gap: 6px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .tab {
     flex: 1;
-    padding: 16px;
+    min-width: 120px;
+    padding: clamp(12px, 3vw, 16px);
     text-align: center;
     background: #111;
     border: 1px solid #333;
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: clamp(11px, 2vw, 14px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tab.active {
@@ -66,9 +80,11 @@ h1 {
 .section {
     display: none;
     background: #0d0d0d;
-    padding: 24px;
-    border-radius: 16px;
+    padding: clamp(16px, 5vw, 24px);
+    border-radius: 14px;
     border: 1px solid #222;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .section.active {
@@ -77,18 +93,20 @@ h1 {
 
 label {
     display: block;
-    margin-top: 18px;
+    margin-top: clamp(14px, 4vw, 18px);
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: clamp(11px, 2.5vw, 14px);
+    font-weight: 600;
+    color: #ccc;
 }
 
 input, select, button {
     width: 100%;
-    padding: 16px;
-    border-radius: 12px;
+    padding: clamp(12px, 3vw, 16px);
+    border-radius: 10px;
     border: 1px solid #333;
     font-family: 'Orbitron', sans-serif;
-    font-size: 15px;
+    font-size: clamp(13px, 2.5vw, 15px);
 }
 
 input, select {
@@ -100,37 +118,267 @@ button {
     background: #fff;
     color: #000;
     font-weight: bold;
-    margin-top: 24px;
+    margin-top: 20px;
     cursor: pointer;
+    font-size: clamp(13px, 2.5vw, 16px);
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 .result {
-    margin-top: 24px;
+    margin-top: 20px;
     background: #111;
-    padding: 18px;
-    border-radius: 14px;
+    padding: clamp(16px, 4vw, 20px);
+    border-radius: 12px;
     border: 1px solid #333;
     text-align: center;
+    font-size: clamp(13px, 2.5vw, 16px);
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.result b {
+    font-size: clamp(18px, 5vw, 28px);
+    display: block;
+    margin: 10px 0;
+}
+
+.error {
+    background: #3d1111;
+    border: 1px solid #ff4444;
+    color: #ff8888;
+    padding: clamp(10px, 3vw, 14px);
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: clamp(11px, 2vw, 13px);
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.success {
+    background: #113d11;
+    border: 1px solid #44ff44;
+    color: #88ff88;
+    padding: clamp(10px, 3vw, 14px);
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: clamp(11px, 2vw, 13px);
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.sample {
+    background: #111;
+    padding: clamp(12px, 3vw, 16px);
+    border-radius: 10px;
+    border: 1px solid #333;
+    margin-bottom: 14px;
+}
+
+.sample-input {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(8px, 2vw, 12px);
+}
+
+.sample-input input {
+    width: 100%;
+}
+
+.metric {
+    background: #111;
+    padding: clamp(14px, 4vw, 18px);
+    border-radius: 10px;
+    margin-top: 12px;
+    text-align: center;
+    word-break: break-word;
+}
+
+.metric-label {
+    font-size: clamp(10px, 2vw, 12px);
+    color: #888;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-value {
+    font-size: clamp(18px, 5vw, 28px);
+    font-weight: bold;
+    color: #fff;
+    margin: 8px 0;
 }
 
 footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: auto;
+    padding-top: 20px;
     color: #666;
-    font-size: 12px;
+    font-size: clamp(10px, 2vw, 12px);
+    word-break: break-word;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+    .container {
+        padding: 16px 12px;
+    }
+
     .tabs {
-        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 18px;
+    }
+
+    .tab {
+        min-width: 90px;
+        padding: 10px 8px;
+        font-size: 11px;
+    }
+
+    .section {
+        padding: 16px;
+    }
+
+    label {
+        margin-top: 14px;
+        font-size: 12px;
+    }
+
+    input, select, button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .result {
+        padding: 16px;
+        font-size: 14px;
+    }
+
+    .result b {
+        font-size: 22px;
+    }
+
+    .sample {
+        padding: 12px;
+    }
+
+    .metric {
+        padding: 14px;
+    }
+
+    .metric-value {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+        padding: 12px 10px;
     }
 
     .logo {
-        font-size: 52px;
+        font-size: 44px;
     }
 
     h1 {
-        font-size: 22px;
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .tabs {
+        gap: 3px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+    }
+
+    .tab {
+        min-width: 80px;
+        padding: 8px 6px;
+        font-size: 10px;
+    }
+
+    .section {
+        padding: 12px;
+    }
+
+    label {
+        margin-top: 12px;
+        font-size: 11px;
+    }
+
+    input, select, button {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .result {
+        padding: 12px;
+        font-size: 13px;
+    }
+
+    .result b {
+        font-size: 18px;
+    }
+
+    .metric-value {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 900px;
+        padding: 32px;
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 32px;
+    }
+
+    .tabs {
+        gap: 12px;
+        margin-bottom: 32px;
+    }
+
+    .tab {
+        padding: 18px 20px;
+        font-size: 15px;
+        min-width: auto;
+    }
+
+    .section {
+        padding: 32px;
+    }
+
+    label {
+        font-size: 15px;
+        margin-top: 20px;
+    }
+
+    input, select, button {
+        padding: 18px;
+        font-size: 16px;
+    }
+
+    .result {
+        padding: 24px;
+        font-size: 17px;
+    }
+
+    .result b {
+        font-size: 32px;
+    }
+
+    .metric-value {
+        font-size: 32px;
     }
 }
 </style>
@@ -140,16 +388,21 @@ footer {
 <div class="container">
 
 <div class="logo">⌁</div>
-<h1>Ather Charge Planner</h1>
+<h1>Smart Charging Scheduler</h1>
 
 <div class="tabs">
-    <div class="tab active" onclick="showTab('schedule')">Charging Schedule</div>
-    <div class="tab" onclick="showTab('gain')">Charge Gain Calculator</div>
+    <div class="tab active" onclick="showTab('schedule')">When To Charge</div>
+    <div class="tab" onclick="showTab('gain')">Forecast</div>
+    <div class="tab" onclick="showTab('calibrate')">Calibrate</div>
     <div class="tab" onclick="showTab('setup')">Setup</div>
 </div>
 
 <!-- Charging Schedule -->
 <div id="schedule" class="section active">
+    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+        Enter your current battery, target charge, and desired completion time. We'll calculate the exact time you need to plug in your scooter.
+    </p>
+
     <label>Current Charge %</label>
     <input type="number" id="currentCharge">
 
@@ -172,6 +425,10 @@ footer {
 
 <!-- Charge Gain -->
 <div id="gain" class="section">
+    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+        See how much battery you'll gain by a specific time. Enter your current charge and target time to get an estimated battery percentage.
+    </p>
+
     <label>Current Charge %</label>
     <input type="number" id="gainCurrent">
 
@@ -182,8 +439,43 @@ footer {
     <div id="gainResult" class="result"></div>
 </div>
 
+<!-- Calibrate -->
+<div id="calibrate" class="section">
+    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+        Track 3 charging observations to calibrate the actual charging speed. Record the time and battery percentage at different points during a charge cycle.
+    </p>
+
+    <div class="sample">
+        <label>Sample 1 - Time</label>
+        <input type="time" id="cal1Time">
+        <label>Sample 1 - Battery %</label>
+        <input type="number" id="cal1Percent" min="0" max="100">
+    </div>
+
+    <div class="sample">
+        <label>Sample 2 - Time</label>
+        <input type="time" id="cal2Time">
+        <label>Sample 2 - Battery %</label>
+        <input type="number" id="cal2Percent" min="0" max="100">
+    </div>
+
+    <div class="sample">
+        <label>Sample 3 - Time</label>
+        <input type="time" id="cal3Time">
+        <label>Sample 3 - Battery %</label>
+        <input type="number" id="cal3Percent" min="0" max="100">
+    </div>
+
+    <button onclick="calculateCalibration()">Calibrate</button>
+    <div id="calibrateResult" class="result"></div>
+</div>
+
 <!-- Setup -->
 <div id="setup" class="section">
+    <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+        Configure your Ather scooter model, charging mode, and charger specifications. These settings are saved locally and used for accurate calculations.
+    </p>
+
     <label>Ather Model</label>
     <select id="model" onchange="autoSelectCharger()">
         <option>450 2.9</option>
@@ -223,7 +515,7 @@ function showTab(tab) {
 
     document.getElementById(tab).classList.add('active');
 
-    const map = {schedule:0,gain:1,setup:2};
+    const map = {schedule:0, gain:1, calibrate:2, setup:3};
     document.querySelectorAll('.tab')[map[tab]].classList.add('active');
 }
 
@@ -239,15 +531,16 @@ function autoSelectCharger() {
 
 function saveSettings() {
     const settings = {
-        model: model.value,
-        mode: mode.value,
-        charger: charger.value,
-        purchaseDate: purchaseDate.value
+        model: document.getElementById("model").value,
+        mode: document.getElementById("mode").value,
+        charger: document.getElementById("charger").value,
+        purchaseDate: document.getElementById("purchaseDate").value
     };
 
     localStorage.setItem("atherSettings", JSON.stringify(settings));
-    alert("Settings Saved");
-    showTab("schedule");
+    localStorage.removeItem("calibratedRate");
+    document.getElementById("setup").innerHTML += '<div class="success">Settings Saved</div>';
+    setTimeout(() => showTab("schedule"), 500);
 }
 
 function loadSettings() {
@@ -260,14 +553,20 @@ function loadSettings() {
 
     const s = JSON.parse(saved);
 
-    model.value = s.model;
-    mode.value = s.mode;
-    charger.value = s.charger;
-    purchaseDate.value = s.purchaseDate;
+    document.getElementById("model").value = s.model;
+    document.getElementById("mode").value = s.mode;
+    document.getElementById("charger").value = s.charger;
+    document.getElementById("purchaseDate").value = s.purchaseDate;
 }
 
 function getRate() {
-    return charger.value == "700" ? 20 : 10;
+    // Check if user has calibrated a rate
+    const calibrated = localStorage.getItem("calibratedRate");
+    if(calibrated) {
+        return parseFloat(calibrated);
+    }
+    // Default rates based on charger type
+    return document.getElementById("charger").value == "700" ? 20 : 10;
 }
 
 function formatTime(d) {
@@ -280,45 +579,202 @@ function formatTime(d) {
 
 function getInputTime(id) {
     const val = document.getElementById(id).value;
+    if(!val) return null;
     const [h,m] = val.split(":");
     const d = new Date();
     d.setHours(h,m,0,0);
     return d;
 }
 
+function validatePercentage(val, fieldName = "") {
+    const num = parseInt(val);
+    if(isNaN(num)) {
+        return {valid: false, error: "Invalid number format"};
+    }
+    if(num < 0) {
+        return {valid: false, error: fieldName ? fieldName + " cannot be negative" : "Percentage cannot be negative"};
+    }
+    if(num > 100) {
+        return {valid: false, error: fieldName ? fieldName + " cannot exceed 100%" : "Percentage cannot exceed 100%"};
+    }
+    return {valid: true, value: num};
+}
+
 function calculateSchedule() {
-    let current = parseInt(currentCharge.value);
-    let target = parseInt(targetCharge.value);
-    let targetT = getInputTime("targetTime");
+    const resultDiv = document.getElementById("scheduleResult");
+    resultDiv.innerHTML = '';
+
+    // Validate inputs
+    const currentVal = validatePercentage(document.getElementById("currentCharge").value, "Current charge");
+    if(!currentVal.valid) {
+        resultDiv.innerHTML = '<div class="error">ERROR: ' + currentVal.error + '</div>';
+        return;
+    }
+
+    const targetVal = validatePercentage(document.getElementById("targetCharge").value, "Target charge");
+    if(!targetVal.valid) {
+        resultDiv.innerHTML = '<div class="error">ERROR: ' + targetVal.error + '</div>';
+        return;
+    }
+
+    if(currentVal.value > targetVal.value) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Current charge cannot be higher than target</div>';
+        return;
+    }
+
+    const targetT = getInputTime("targetTime");
+    if(!targetT) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Please enter a target time</div>';
+        return;
+    }
+
+    const now = new Date();
+    if(targetT <= now) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Target time must be in the future</div>';
+        return;
+    }
+
+    let current = currentVal.value;
+    let target = targetVal.value;
     let rate = getRate();
-    let modeVal = mode.value;
+    let modeVal = document.getElementById("mode").value;
 
     let mins;
 
     if(modeVal === "Optimized" && target > 80){
-        mins = ((80-current)/rate)*60;
+        mins = ((80 - current) / rate) * 60;
     } else {
-        mins = ((target-current)/rate)*60;
+        mins = ((target - current) / rate) * 60;
     }
 
-    targetT.setMinutes(targetT.getMinutes() - mins);
+    const plugInTime = new Date(targetT);
+    plugInTime.setMinutes(plugInTime.getMinutes() - mins);
 
-    scheduleResult.innerHTML =
-        "PLUG IN AT <br><br><b>" + formatTime(targetT) + "</b>";
+    if(plugInTime <= now) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Need to plug in immediately. Target time too soon for requested charge.</div>';
+        return;
+    }
+
+    let message = "PLUG IN AT <br><br><b>" + formatTime(plugInTime) + "</b>";
+    if(modeVal === "Optimized" && target > 80) {
+        message += "<br><br><small>Will charge to 80% first, then delay final charge to optimize battery health.</small>";
+    }
+    if(localStorage.getItem("calibratedRate")) {
+        message += "<br><small style='color: #888;'>(Using calibrated rate: " + rate + "%/hour)</small>";
+    }
+
+    resultDiv.innerHTML = message;
 }
 
 function calculateGain() {
-    let current = parseInt(gainCurrent.value);
-    let targetT = getInputTime("gainTime");
-    let now = new Date();
+    const resultDiv = document.getElementById("gainResult");
+    resultDiv.innerHTML = '';
 
-    let mins = (targetT-now)/60000;
-    let gain = (mins/60)*getRate();
+    const currentVal = validatePercentage(document.getElementById("gainCurrent").value, "Current charge");
+    if(!currentVal.valid) {
+        resultDiv.innerHTML = '<div class="error">ERROR: ' + currentVal.error + '</div>';
+        return;
+    }
 
-    gainResult.innerHTML =
-        "ESTIMATED BATTERY <br><br><b>" +
-        Math.min(100, Math.round(current+gain)) +
-        "%</b>";
+    const targetT = getInputTime("gainTime");
+    if(!targetT) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Please enter a target time</div>';
+        return;
+    }
+
+    const now = new Date();
+    let mins = (targetT - now) / 60000;
+
+    if(mins <= 0) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Target time must be in the future</div>';
+        return;
+    }
+
+    let gain = (mins / 60) * getRate();
+    let estimated = currentVal.value + gain;
+
+    if(estimated > 100) {
+        estimated = 100;
+    }
+
+    let message = "ESTIMATED BATTERY <br><br><b>" + Math.round(estimated) + "%</b>";
+    if(localStorage.getItem("calibratedRate")) {
+        message += "<br><small style='color: #888;'>(Using calibrated rate: " + getRate() + "%/hour)</small>";
+    }
+
+    resultDiv.innerHTML = message;
+}
+
+function calculateCalibration() {
+    const resultDiv = document.getElementById("calibrateResult");
+    resultDiv.innerHTML = '';
+
+    // Validate all inputs
+    const t1 = getInputTime("cal1Time");
+    const p1 = validatePercentage(document.getElementById("cal1Percent").value, "Sample 1 %");
+    const t2 = getInputTime("cal2Time");
+    const p2 = validatePercentage(document.getElementById("cal2Percent").value, "Sample 2 %");
+    const t3 = getInputTime("cal3Time");
+    const p3 = validatePercentage(document.getElementById("cal3Percent").value, "Sample 3 %");
+
+    if(!t1 || !t2 || !t3) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Please enter all three times</div>';
+        return;
+    }
+
+    if(!p1.valid || !p2.valid || !p3.valid) {
+        const errors = [p1, p2, p3].filter(p => !p.valid).map(p => p.error);
+        resultDiv.innerHTML = '<div class="error">ERROR: ' + errors[0] + '</div>';
+        return;
+    }
+
+    // Check that samples are in order
+    if(t1 > t2 || t2 > t3) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Times must be in ascending order (Sample 1 < Sample 2 < Sample 3)</div>';
+        return;
+    }
+
+    // Check that battery percentages are increasing
+    if(p1.value > p2.value || p2.value > p3.value) {
+        resultDiv.innerHTML = '<div class="error">ERROR: Battery percentages must be increasing over time</div>';
+        return;
+    }
+
+    // Calculate charging rates between samples
+    const gap1Mins = (t2 - t1) / 60000;
+    const gap2Mins = (t3 - t2) / 60000;
+
+    const rate1 = (p2.value - p1.value) / (gap1Mins / 60);
+    const rate2 = (p3.value - p2.value) / (gap2Mins / 60);
+    const avgRate = (rate1 + rate2) / 2;
+
+    // Determine charging quality
+    let quality = "EXCELLENT";
+    if(Math.abs(rate1 - rate2) > 5) {
+        quality = "GOOD";
+    }
+    if(Math.abs(rate1 - rate2) > 10) {
+        quality = "FAIR";
+    }
+
+    // Save calibrated rate
+    localStorage.setItem("calibratedRate", avgRate.toFixed(2));
+
+    resultDiv.innerHTML =
+        '<div class="metric">' +
+            '<div class="metric-label">AVERAGE CHARGING SPEED</div>' +
+            '<div class="metric-value">' + avgRate.toFixed(2) + '%/hour</div>' +
+        '</div>' +
+        '<div class="metric">' +
+            '<div class="metric-label">CHARGING QUALITY</div>' +
+            '<div class="metric-value">' + quality + '</div>' +
+        '</div>' +
+        '<div class="metric" style="font-size: 12px; color: #888;">' +
+            '<div>Sample 1 to 2: ' + rate1.toFixed(2) + '%/hour</div>' +
+            '<div>Sample 2 to 3: ' + rate2.toFixed(2) + '%/hour</div>' +
+            '<div style="margin-top: 10px; color: #666;">Your calculations will now use this calibrated rate.</div>' +
+        '</div>' +
+        '<div class="success" style="margin-top: 16px;">Calibration saved! Future calculations will use this rate.</div>';
 }
 
 loadSettings();
